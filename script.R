@@ -52,7 +52,7 @@ data <- list(
   big_numbers = list(
     valor_gasto = 9999999,
     t_atrasos = total_atrasos,
-    t_litros = start + sum,
+    t_litros = start + sum
   ),
   info_trocos = info_trocos
 )
