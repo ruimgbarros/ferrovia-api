@@ -5,6 +5,8 @@ library(jsonlite)
 library(stringr)
 library(googlesheets4)
 
+gs4_deauth()
+
 update <- .POSIXct(Sys.time(), "GMT")
 update <- glue('{format(update, "%a %b %d %Y %X")} GMT')
 updated_pt_text <- glue('{day(Sys.time())} de {month(Sys.time(), label = TRUE, abbr = FALSE, locale="pt_PT")} de {year(Sys.time())}')
