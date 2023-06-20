@@ -9,7 +9,7 @@ gs4_deauth()
 
 update <- .POSIXct(Sys.time(), "GMT")
 update <- glue('{format(update, "%a %b %d %Y %X")} GMT')
-updated_pt_text <- glue('{day(Sys.time())} de {month(Sys.time(), label = TRUE, abbr = FALSE, locale="pt_PT.utf8")} de {year(Sys.time())}')
+updated_pt_text <- glue('{day(Sys.time())} de {month(Sys.time(), label = TRUE, abbr = FALSE, locale="pt_PT")} de {year(Sys.time())}')
 
 data_sheets <- read_sheet("https://docs.google.com/spreadsheets/d/1I_9kfSX8Qa8--Zn2g0E8qE5x5oq6cc9kfBKmDJ1pzSc/edit#gid=1", sheet = 'BaseDeDados', skip = 1)
 
