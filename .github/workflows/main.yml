@@ -9,7 +9,7 @@ on:
 
 jobs:
   SetUpR:
-    runs-on: macos-12
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         r-version: [4.0.2]
@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          install.packages(c("tidyverse","jsonlite","lubridate","glue", "googlesheets4", "stringr" ))
+          install.packages(c("dplyr","jsonlite","lubridate","glue", "googlesheets4", "stringr" ))
         shell: Rscript {0}
 
       - name: Updating data and cleaning
