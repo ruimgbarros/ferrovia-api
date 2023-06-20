@@ -37,6 +37,7 @@ days <- difftime(Sys.Date(), start_date)
 days <- as.numeric(days)
 sum <- days * 14237
 
+options(scipen = 100, digits = 4)
 #total gasto
 total_gasto <- read_sheet("https://docs.google.com/spreadsheets/d/1I_9kfSX8Qa8--Zn2g0E8qE5x5oq6cc9kfBKmDJ1pzSc/edit#gid=1", sheet = 'TotalGasto', skip = 0) %>%
   filter(data_update == max(data_update))
@@ -50,7 +51,7 @@ data <- list(
     update_text = updated_pt_text
   ),
   big_numbers = list(
-    valor_gasto = 9999999,
+    valor_gasto = total_gasto %>% pull(2),
     t_atrasos = total_atrasos,
     t_litros = start + sum
   ),
