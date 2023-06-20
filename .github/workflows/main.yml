@@ -1,39 +1,37 @@
+name: auto-update-data
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
   schedule:
-    - cron: "0 * * * *"
+  - cron: '0 * * * *'
 
 jobs:
-  import-data:
-    runs-on: ubuntu-latest
+  SetUpR:
+    runs-on: macos-12
+    strategy:
+      matrix:
+        r-version: [4.0.2]
     steps:
-      - name: Set up R
-        uses: r-lib/actions/setup-r@v2
+      - uses: actions/checkout@v2
 
-      - name: Install packages
-        uses: r-lib/actions/setup-r-dependencies@v2
+      - name: Set up R ${{ matrix.r-version }}
+        uses: r-lib/actions/setup-R@v2
         with:
-          packages: |
-            any::dplyr
-            any::jsonlite
-            any::lubridate
-            any::glue 
-            any::googlesheets4
-            any::stringr
+          r-version: ${{ matrix.r-version }}
 
-      - name: Check out repository
-        uses: actions/checkout@v3
-
-      - name: Import data
-        run: Rscript -e 'source("script.R")'
-
-      - name: Commit results
+      - name: Install dependencies
         run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add survey_data.rds
-          git commit -m 'Data updated' || echo "No changes to commit"
-          git push origin || echo "No changes to commit"
+          install.packages(c("dplyr","jsonlite","lubridate","glue", "googlesheets4", "stringr" ))
+        shell: Rscript {0}
+
+      - name: Updating data and cleaning
+        run: |
+          source('script.R')
+        shell: Rscript {0}
+
+      - name: Commit Changes
+        run: |
+          git commit data.json -m 'Re-build data.json' || echo "No changes to commit"
+          git push https://${{github.actor}}:${{secrets.GH_TOKEN}}@github.com/${{github.repository}}.git HEAD:${{ github.ref }} || echo "No changes to commit"
